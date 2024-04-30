@@ -1,0 +1,403 @@
+#ALGORÍTIMO QUE DESCREVE UM MODELO DE REGRESSÃO LINEAR MÚLTIPLA
+#PREVÊ O VALOR DO ALUGÉL DO VEÍCULO EM FUNÇÃO DE OUTRAS VARIÁVEIS
+#GERA ESTIMATIVAS DESCRITIVAS DO PROCESSO "EXPLICAÇÃO".
+
+#VÍDEO ILUSTRATIVO: https://www.linkedin.com/posts/renancaetan0_regressaolinearmultipla-rstudio-activity-7188831568960897025-CE9U?utm_source=share&utm_medium=member_desktop
+
+#Instala biblioteca de gráficos
+install.packages('ggplot2')
+install.packages('plotly')
+#Carrega bibilioteca de Gráficos
+library(ggplot2)
+library(plotly)
+
+dev.off() #limpa gráficos
+options(scipen = 666) #Remove notações científicas  
+
+#Carrega dados de aluguéis de carros que a agência de aluguél de veículos disponibilizou.
+#Preço | Portas | Ar Condicionado | Quadrimestre | Idade do Locatário | Quilometragem | Dolar
+#obs.: "Preço" se refere ao Preço do Aluguél do Veículo.
+
+dados <- data.frame(
+  Preco = c(368.384514890573, 446.850186825816, 
+            414.72765691978, 434.291090918223, 436.652686535348, 457.65797344255, 
+            490.694346597566, 474.881781399868, 458.462395897205, 412.719412673294, 
+            448.799032112411, 352.040747235864, 449.461858221104, 416.150953927119, 
+            416.499426750268, 551.315803331779, 462.126789471159, 515.957335395508, 
+            467.598697162974, 339.548470369391), 
+  Quilometragem = c(957.442780544097, 829.533278217768, 923.300215829467, 871.519116905113, 930.704105677958, 554.696695914233, 501.941059782271, 
+                    665.435074822519, 568.24079543466, 930.704105677958, 554.696695914233, 
+                    829.533278217768, 665.435074822519, 871.519116905113, 930.704105677958, 
+                    351.547138218644, 501.941059782271, 447.872006186523, 568.24079543466, 
+                    930.704105677958), 
+  Idade_Locatario = c(23, 18, 28, 21, 18, 21, 18, 20, 25, 29, 18, 33, 20, 21, 18, 21, 18, 20, 25, 29),
+  Dolar = c(4.41147933990862, 5.63014407874318, 
+            8.80557934010615, 4.260591319988649, 6.93416279643155, 1.61130694543154, 
+            2.57813244655973, 4.66666728709914, 1.6846066723224, 7.33872353619711, 
+            4.52300814589177, 2.96689816205009, 9.91448182957733, 8.55577847959413, 
+            5.93424935955983, 5.55775429484673, 6.94475470863839, 4.74330294976712, 
+            4.723306965757987, 4.7010894862212),
+  Ar_Condicionado = c("sem_ar_condicionado",  "com_ar_condicionado", "com_ar_condicionado", "com_ar_condicionado", 
+                      "com_ar_condicionado", "com_ar_condicionado", "com_ar_condicionado", 
+                      "com_ar_condicionado", "com_ar_condicionado", "com_ar_condicionado", 
+                      "com_ar_condicionado", "sem_ar_condicionado", "com_ar_condicionado", 
+                      "com_ar_condicionado", "com_ar_condicionado", "com_ar_condicionado", 
+                      "com_ar_condicionado", "com_ar_condicionado", "com_ar_condicionado", 
+                      "sem_ar_condicionado"),
+  Portas = c("duas_portas", "quatro_portas", "duas_portas", "quatro_portas", "quatro_portas", 
+             "duas_portas", "quatro_portas", "duas_portas", "quatro_portas", 
+             "duas_portas", "quatro_portas", "quatro_portas", "duas_portas", 
+             "quatro_portas", "duas_portas", "quatro_portas", "quatro_portas", 
+             "duas_portas", "quatro_portas", "quatro_portas"),
+  Quadrimestre = c("segundo_quadrimestre","segundo_quadrimestre", "segundo_quadrimestre", "segundo_quadrimestre", 
+                   "segundo_quadrimestre", "terceiro_quadrimestre", "primeiro_quadrimestre", 
+                   "primeiro_quadrimestre", "terceiro_quadrimestre", "segundo_quadrimestre", 
+                   "terceiro_quadrimestre", "segundo_quadrimestre", "terceiro_quadrimestre", 
+                   "segundo_quadrimestre", "segundo_quadrimestre", "primeiro_quadrimestre", 
+                   "terceiro_quadrimestre", "primeiro_quadrimestre", "primeiro_quadrimestre", 
+                   "segundo_quadrimestre"))
+
+
+# PREÇO X QUILOMETRAGEM_________________________________________________
+
+# Avalia via gráfico de disperção a relação entre Preço e Quilometragem.
+plot(y = dados$Preco,
+     x = dados$Quilometragem,
+     pch = 16, ylab = 'Preço',xlab = 'Quilometragem',
+     main = 'Preço x Quilometragem'
+)
+grid()
+
+# Calcula a correlação entre Preço e Quilometragem
+cor(dados$Preco, dados$Quilometragem)
+# Resultado: -0.82315161.
+# Alta correlação, variável será utilizada no modelo matemático.
+#_______________________________________________________________________
+
+
+# PREÇO X IDADE LOCATÁRIO_______________________________________________
+# Avalia via gráfico de disperção a relação entre Preço e a Idade do Locatáio.
+plot(y = dados$Preco,
+     x = dados$Idade_Locatario,
+     pch = 16, ylab = 'Preço', xlab = 'Idade Locatário',
+     main = 'Preço x Idade Locatário'
+)
+grid()
+
+# Calcula a correlação entre Preço e Idade do Locatário
+cor(dados$Preco, dados$Idade_Locatario)
+#-0.5804777
+#entre 0,5 e 1 é correlação positiva alta,
+
+
+
+
+
+
+
+
+
+
+
+
+
+#5 PRECO DO ALUGEL X COTAÇÃO DO DOLAR
+plot(y = dados$Preco,
+     x = dados$Dolar,
+     pch = 16, ylab = 'Preço', xlab = 'Dolar',
+     main = 'Preço Alguél x Dolar'
+)
+grid()
+cat("\014")
+#
+
+# CORRELAÇÃO - PRECO X COTAÇÃO DO DOLAR
+
+cor(dados$Preco, dados$Dolar)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#6  TESTE T STUDENT - INFLUENCIA DO AR CONDICIONADO x PRECO
+cat("\014")
+t.test(dados$Preco ~ dados$Ar_Condicionado , 
+       paired = FALSE, 
+       alternative = 'two.sided',
+       conf.level = 0.95
+)
+
+
+
+
+
+
+
+
+
+
+
+#10 BOXPLOT AR CONDICIONADO X PREÇO ALUGÉL
+BoxPlotAr = ggplot (data = dados, aes(y = Preco, x = Ar_Condicionado,
+col = Ar_Condicionado)) + geom_boxplot()
+ggplotly(BoxPlotAr)
+
+# "DEUS DISSE: Moisés, faz um backup que eu vou formatar" :D
+# se reparou, comenta "Eu Vi"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#11 T DE STUDENT Nº PORTAS X PREÇO ALUGUÉL
+t.test(dados$Preco ~ dados$Portas , 
+       paired = FALSE, 
+       alternative = 'two.sided',
+       conf.level = 0.95
+)
+#10 BOXPLOT N PORTAS X PREÇO ALUGÉL
+BoxPlotPortas = ggplot (data = dados, aes(y = Preco, x = Portas,
+                                          col = Portas)) + geom_boxplot()
+ggplotly(BoxPlotPortas)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#13 TESTE ANOVA QUADRIMESTRE X PREÇO ALUGUÉL
+anovaPxQ <- aov(Preco ~ Quadrimestre, data = dados)
+summary(anovaPxQ)
+
+
+
+
+
+
+
+
+
+
+
+#14 BOXPLOT QUADRIMESTRE X PREÇO ALUGUÉL
+BoxPlotVendas = ggplot (data = dados, aes(y = Preco, x = Quadrimestre, col = Quadrimestre)) + geom_boxplot()
+ggplotly(BoxPlotVendas)
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 15 VERIFICAÇÃO DE VARIÁVEIS ELEITAS REPRESENTATIVAS PARA O SISTEMA
+
+#Avaliando representatividade de cada variável na variável resposta:
+#1-Quilometragem  -  Correlação: -0.82
+#2-Idade_Locatario - Correlação: -0.58
+#3-Dolar            - Correlação: 0.06 X Não representativo
+#4-Quadrimestre      - P valor: 0.0126%
+#5-Ar_Condicionado   - P valor: 0.003%
+#6-Portas            - P valor: 88.84% X Não representativo
+# frase interessante e engraçada - se reparou, comenta "Eu Vi"
+
+
+
+
+
+
+
+
+#16- CÁLCULO DO MODELO DE REGRESSÃO LINEAR MÚLTIPLA
+modelo_PxQIQA <- lm(Preco ~ Quilometragem + Idade_Locatario + Quadrimestre + Ar_Condicionado, data = dados)
+summary(modelo_PxQIQA)
+
+
+
+
+
+
+
+
+
+
+
+#  Preço do Aluguél = 629.95 -0.19*Quilometragem -1,59*Idade_Locatario
+#  -60.29*Sem_Ar_condicionado -33.60*Terceiro_Quadr +1.6*Segundo_Quadr
+
+
+
+
+
+
+
+
+
+
+#  Preço do Aluguél = 629.95 -0.19*Quilometragem -1,59*Idade_Locatario
+#  -60.29*Sem_Ar_condicionado -33.60*Terceiro_Quadr +1.6*Segundo_Quadr
+
+# 17 - INSIGHTS
+[ MENOS R$0,19 a cada 1 Km rodado]
+  
+[ MENOS R$1,59 a cada 1 ano de idade do locatário]
+[ MENOS R$60,29 se não tem condicionado]
+[ MENOS R$33,60 se for no Terceiro Quadrimestre]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Preço Alugué Estimado <- 629.95 -0.19*770 -1,59*25
+-60.29*0 -33.60*1 +1.6*0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Preco_Aluguel_Estimado <- 629.95 -0.19*770 -1.59*25 -60.29*0 -33.60*1 +1.6*0
+cat("R$",Preco_Aluguel_Estimado, "\n");  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Graficos de análises estatísticas da representatividade do modelo
+par(mfrow=c(2,2))
+plot(modelo_PxQIQA, pch=16)
+#
+#No gráfico "Residual vs Fitted", indica não um bom modelo até quando o Preço do Alugél é
+#450. De 450 até +-475 os erros estão polarizados negativamente,
+#e de 475 até o preço máximo estão muito polarizados positivamente.
+#O ideal é uma reta zero passando pelo zero. Mas neste caso sugere que um
+#outro modelo (não linear, ou com outras variáveis) representaria melhor este sistema.
+
+#No gráfico "Q-Q Residuals", de -2 a -1 esta ruim, não sei bem o que significa mas
+#bom seria todos em cima da linha pontilhada
+
+#No gráfico "Residuals vs Leverage" , temos o ponto 16 (o que significa?) como outlier positivo,
+#e quatro outro pontos como outlier negativos, o que sugere uma má representavidade do 
+#modelo nestes pontos. quanto mais distantes existem pontos da linha, mais caracteristicos
+#de Out liers mal representados pelo modelo.
+
+
+################################################################################
+#==============================================================================#
+#### MODELO DE REGRESSÃO LINEAR MÚLTIPLA COM AS VARIÁVEIS DETERMINADAS PELO ####
+########################### ALGORÍTIMO STEP WISE ###############################
+#==============================================================================#
+################################################################################
+# Criar um novo modelo todas as variáveis do sistema
+modelo_Todas_Variaveis <- lm(Preco ~ Quilometragem + Idade_Locatario + Quadrimestre + Ar_Condicionado + Portas + Dolar, data = dados)
+modelo_Todas_Variaveis
+#Preço do Aluguél = 654.50 -0.22*Quilometragem -1,68*Idade_Locatario -57.36*Sem_Ar_condicionado -31.54*Terceiro_Quadrimestre +14.96*Segundo_Quadrimestre -9,66*Quatro_Portas + 0,4245*Dolar
+# Usar o método StepWise neste modelo
+modelo_StepWise <- step(modelo_Todas_Variaveis)
+#Preço do Aluguél = 655.82 -0.22*Quilometragem -1,68*Idade_Locatario -58.50*Sem_Ar_condicionado -31.43*Terceiro_Quadrimestre +15.34*Segundo_Quadrimestre -9,94*Quatro_Portas
+#Verificando estatisticamente a eficácia do modelo
+summary(modelo_StepWise)
+#Graficos de análises estatísticas da representatividade do modelo
+par(mfrow=c(2,2))
+plot(modelo_StepWise, pch=16)
+
+
+
+##------------ROTEIRO------------------##
+#Verificar relação entre Preço e ar condicionado (VAR CATEGÓRICA):
+#(X)Box plot para verificar visualmente a relação
+#(X)T de STUDENT para verificar se influenciam no valor final = sim
+#(X)Modelo de Regressão linear múltipla, somente com as variáveis que influenciaram
+#Quilometragem, Idade Locatário, Quadrimestre, Ar condicionado
+#(X)Plot avaliação estatística gráfica da representatividade do modelo         x
+#(x) Questionamentos respostas e perguntas, predições do modelo.
+#(x) Modelo de Regressão Linear por StepWise
+#(x) coef. de segundo quadrimestre do step deu muito diferente do Regr. linear meu, conferir o meu
+#(x) Avaliar por que 4 portas tem coeficiente negativo no preço OUTLIERS
+#(x)Plot avaliação estatística gráfica da representatividade do modelo
+# Comparar os dois modelos
+
+#(x) Selecionar quais passos até aqui serão realizados para a apresentação deste caso
+#como vídeo Reels,
+#(x) Salvar como novo arquivo .R  somente com os passos, Editar estéticamente
+#estruturas e comentários
+#(x) Reduzir roreito atual de 110 segundos para 90 segundos!
+#(  ) Fazer um vídeo teste de gravar a minha imagem e a da tela, exibindo em formato Reels
+#pesquisar se for o caso
+#(  ) Gravar vídeo = 1 minuto e meio.
+#(  ) Postar no Instagram e LinkdeIn
+#(  ) Estudar como fazer postagem no GitHub, postar no Github
+
+
