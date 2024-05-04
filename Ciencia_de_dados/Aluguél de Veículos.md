@@ -241,7 +241,7 @@ summary(modelo_PxQIQA)
 ```
 Modelo Matemático Resultante:
 
-###  Preço do Aluguél = 629,95 -0,19*Quilometragem -1,59*Idade_Locatario -60,29*Sem_Ar_condicionado -33,60*Terceiro_Quadr +1,6*Segundo_Quadr
+###  Preço do Aluguel = 629,95 -0,19*Quilometragem -1,59*Idade_Locatario -60,29*Sem_Ar_condicionado -33,60*Terceiro_Quadr +1,6Segundo_Quadr
 
 
 ## Informações estatísticas úteis obtidas com os coeficientes angulares do modelo
@@ -275,7 +275,7 @@ No gráfico "Q-Q Residuals", de -2 a -1 do eixo X, os pontos passam distante da 
 No gráfico "Residuals vs Leverage" , temos o ponto 16  como outlier positivo, e quatro outro pontos como outlier negativos, o que sugere uma má representavidade do modelo nestes pontos. Quanto mais distantes existem pontos da linha, mais caracteristicos de Out liers mal representados pelo modelo.
 
 
-## CALCULANDO MODELO DE REGRESSÃO LINEAR MÚLTIPLA COM AS MESMAS VARIÁVEIS, PORÉM DETERMINADAS PELO ALGORÍTIMO STEP WISE "BOTH"
+## Calculo do Modelo Matemático de Regressão Linear Múltipla utilizando Algorítimos StepWise Both
 
 Este método faz implementações inserindo e retirando variáveis para no fim informar um modelo de regressão linear múltipla que melhor representa o sistema.
 
