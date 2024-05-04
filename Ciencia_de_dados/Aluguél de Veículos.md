@@ -250,7 +250,6 @@ Modelo Matemático Resultante:
 [ MENOS R$60,29 se não tem condicionado]
 [ MENOS R$33,60 se for no Terceiro Quadrimestre]
 
-
 ## Exemplo de predição de valor de aluguel
 
 ### Qual seria o valor do alguél de um veículo de 770mil Km rodados, para um cliente de 25 anos, com Ar condicionado, em Setembro?
@@ -301,6 +300,7 @@ Modelo StepWise obtido:
 [ MENOS R$31,43 se for no Terceiro Quadrimestre]
 [ MAIS R$15,34 se for no Segundo Quadrimestre]
 [ MENOS R$9,94 se tiver Quatro Portas]
+
 
 ### Agora utilizando o modelo Step Wise, calcular qual seria o preço do aluguél nas mesmas condições apresentadas. E consideremos ser um veículo de 4 portas em ambos os casos.
 Qual seria o valor do alguél de um veículo de 770mil Km rodados, para um cliente de 25 anos, com Ar condicionado, em Setembro?
