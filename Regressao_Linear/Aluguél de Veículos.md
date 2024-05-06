@@ -91,7 +91,7 @@ plot(y = dados$Preco,
 )
 grid()
 ```
-![Preço x Quilometragem](./Images_do_Git/PrecoxQuilometragem.png)
+![Preço x Quilometragem](./Images/PrecoxQuilometragem.png)
 
 Percebe-se uma tendência na diminuição do valor preço do aluguél com o aumento da quilometragem.
 
@@ -113,7 +113,7 @@ plot(y = dados$Preco,
 )
 grid()
 ```
-![Preço x Idade](./Images_do_Git/PrecoxIdade.png)
+![Preço x Idade](./Images/PrecoxIdade.png)
 
 Percebe-se ligeira relação de diminuição do preço do alugél com o aumento da idade do locatário.
 
@@ -136,7 +136,7 @@ plot(y = dados$Preco,
 )
 grid()
 ```
-![Preço x Dolar](./Images_do_Git/PrecoxDolar.png)
+![Preço x Dolar](./Images/PrecoxDolar.png)
 
 Percebe-se visualmente que não há relações claras entre as variáveis, os pontos se assemelham a ruídos.
 
@@ -157,7 +157,7 @@ BoxPlotAr = ggplot (data = dados, aes(y = Preco, x = Ar_Condicionado,
 col = Ar_Condicionado)) + geom_boxplot()
 ggplotly(BoxPlotAr)
 ```
-![Preço x Ar](./Images_do_Git/PrecoxAr.png)
+![Preço x Ar](./Images/PrecoxAr.png)
 Percebe-se visuamente os valores de alugél em faixas diferentes de preço quando possuem e não possuem ar condicionado.
 
 ### Avaliação estatística: Calcula o teste t de student do Preço em função do Ar Condicionado.
@@ -182,7 +182,7 @@ obs.: Portas é uma variável categórica, assume 2 valores "Duas Portas" ou "Qu
 BoxPlotPortas = ggplot (data = dados, aes(y = Preco, x = Portas, col = Portas)) + geom_boxplot()
 ggplotly(BoxPlotPortas)
 ```
-![Preço x Portas](./Images_do_Git/PrecoxPortas.png)
+![Preço x Portas](./Images/PrecoxPortas.png)
 
 Percebe-se visualmente que os valores de alguél se apresentam em faixas de preço parecidas tando com duas ou quatro portas.
 
@@ -206,7 +206,7 @@ A variável Portas NÃO será utilizada no modelo.
 BoxPlotVendas = ggplot (data = dados, aes(y = Preco, x = Quadrimestre, col = Quadrimestre)) + geom_boxplot()
 ggplotly(BoxPlotVendas)
 ```
-![Preço x Quadrimestre](./Images_do_Git/PrecoxQuadrimestre.png)
+![Preço x Quadrimestre](./Images/PrecoxQuadrimestre.png)
 
 Percebe-se visualmente os valores de alugél em faixas diferentes de acordo com o quadrimestre.
 
@@ -263,7 +263,7 @@ Preço_Aluguel_Estimado
 par(mfrow=c(2,2))
 plot(modelo_PxQIQA, pch=16)
 ```
-![Análise do Modelo Manual](./Images_do_Git/AnaliseModeloManual.png)
+![Análise do Modelo Manual](./Images/AnaliseModeloManual.png)
 
 No gráfico "Residual vs Fitted", indica que o modelo faz uma representação razoável até o Preço do Alugél de 450 pois a curva dos resíduos esta próxima de uma reta com média zero. De 450 até +-475 os erros estão polarizados negativamente, e de 475 até o preço máximo estão muito polarizados positivamente.
 O ideal é uma reta zero passando pelo zero. Mas neste caso sugere que um #outro modelo (não linear, ou com outras variáveis) representaria melhor este sistema.
@@ -316,7 +316,7 @@ summary(modelo_StepWise)
 par(mfrow=c(2,2))
 plot(modelo_StepWise, pch=16)
 ```
-![Análise do Modelo StepWise](./Images_do_Git/AnaliseModeloStepWise.png)
+![Análise do Modelo StepWise](./Images/AnaliseModeloStepWise.png)
 
 Em comparação com os gráficos do modelo onde as variáveis foram avaliadas manualmente:
 
