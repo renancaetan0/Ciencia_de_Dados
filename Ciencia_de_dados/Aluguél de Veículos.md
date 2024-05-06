@@ -22,10 +22,9 @@ Carrega bibilioteca de Gráficos
 library(ggplot2)
 library(plotly)
 ```
-Limpa a tela de gráficos exsistentes, Inibe notações científicas
+Inibe notações científicas
 
 ```
-dev.off()
 options(scipen = 666)
 ```
 
@@ -280,15 +279,15 @@ Este método faz implementações inserindo e retirando variáveis para no fim i
 
 ## Criando um novo modelo com todas as variáveis do sistema, para a partir dele, o Step Wise esolher o melhor modelo:
 ```
-Modelo_Todas_Variaveis <- lm(Preco ~ Quilometragem + Idade_Locatario + Quadrimestre + Ar_Condicionado + Portas + Dolar, data = dados)
-Modelo_Todas_Variaveis
+modelo_todas_variaveis <- lm(Preco ~ Quilometragem + Idade_Locatario + Quadrimestre + Ar_Condicionado + Portas + Dolar, data = dados)
+modelo_todas_variaveis
 ```
 Modelo de todas variáveis obtido:
 Preço do Aluguél = 654,50 -0.22*Quilometragem -1,68*Idade_Locatario -57,36*Sem_Ar_condicionado -31,54*Terceiro_Quadrimestre +14,96*Segundo_Quadrimestre -9,66*Quatro_Portas + 0,4245*Dolar
 
 ## Usar o método StepWise neste modelo
 ```
-modelo_StepWise <- step(modelo_Todas_Variaveis)
+modelo_StepWise <- step(modelo_todas_variaveis)
 ```
 Modelo StepWise obtido:
 ### Preço do Aluguél = 655.82 -0.22*Quilometragem -1.68*Idade_Locatario -58.50*Sem_Ar_condicionado -31.43*Terceiro_Quadrimestre +15.34*Segundo_Quadrimestre -9.94*Quatro_Portas
